@@ -1,6 +1,6 @@
-\name{anRpackage-package}
-\alias{anRpackage-package}
-\alias{anRpackage}
+\name{unsaacBEA-pacdkage}
+\alias{unsaacBEA-package}
+\alias{unsaacBEA}
 \docType{package}
 \title{
   A short title line describing what the package does

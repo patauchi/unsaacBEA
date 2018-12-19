@@ -1,4 +1,7 @@
-#if (getRversion() >= "2.15.1") { utils::globalVariables(c("aes"))}
+if (getRversion() >= "2.15.1") { utils::globalVariables(c("Commun","Re.Ab","Species","Ranks","Community","log2pi",
+                                                          "log10pi","ys","geom_point","facet_wrap","geom_line","theme_bw",
+                                                          "xlab","ylab","theme","theme_bw","element_text","scale_fill_brewer",
+                                                          "scale_color_brewer","vars","geom_text","aes"))}
 #' Rango Abundance Distribution Fit
 #'
 #' \code{Rango Abundance Curve} returns the abundance models.
@@ -9,10 +12,11 @@
 #' first argument.
 #'
 #' @param Vdata Two Community with Abundance of species.
-#' @param name 
-#' @param plot
-#' @param method 
-#' @param mixing 
+#' @param name asd asd asd asd as
+#' @param plot a das das das 
+#' @param method  a dasd as das dasdsa
+#' @param mixing  asdad as da
+#' @param ... optional
 #' 
 #' @return If all inputs are integer and logical, then the output
 #'   will be an integer. If integer overflow
@@ -22,24 +26,17 @@
 #'
 #'   Zero-length vectors have sum 0 by definition. See
 #'   \url{http://en.wikipedia.org/wiki/Empty_sum} for more details.
-#' @examples
-#' a<-c(2,3,4,5,4,5,10)
-#' b<-c(0,0,0,1,5,6,50)
-#' c<-data.frame(a,b)
-#' c<-t(c)
-#' beta.diversity(as, indice='jaccard')
-#' 
-#' @importFrom dplyr %>%
+#' @export
 #' @import ggplot2
 
- rad.fit <- function(Vdata, name=FALSE, plot = F, method='Log10', mixing = FALSE, ...){
-   
-   # Conditionals
+rad.fit <- function(Vdata, name=FALSE, plot = F, method='Log10', mixing = FALSE, ...){
+  
+  # Conditionals
   if(!is.factor(Vdata[[1]]) == TRUE)
     stop('First column is factor class')
-   # Extracting dataset
-   n <- ncol(Vdata) - 1 # number of communities
-   
+  # Extracting dataset
+  n <- ncol(Vdata) - 1 # number of communities
+  
   radCom <- list()
   #x <- as_tibble(x)
   
@@ -47,17 +44,17 @@
     
     k <- i + 1
     mm <- Vdata[,c(1,k)]
-      
+    
     mm <- dplyr::filter(mm, mm[[2]] != 0); names(mm) <- c('Species', 'Commun')
     ns <- 1:nrow(mm)
     dat.Ab <- dplyr::mutate(mm, Re.Ab = Commun/sum(Commun), log2pi = log2(Re.Ab), 
-                     log10pi = log10(Re.Ab), Community = paste0('Community_', i))
+                            log10pi = log10(Re.Ab), Community = paste0('Community_', i))
     dat.Ab <- dplyr::arrange(dat.Ab, -Commun)
     dat.Ab <- dplyr::mutate(dat.Ab, Ranks = ns)
     
-
+    
     radCom[[i]] <- dat.Ab
-   
+    
   }
   
   if(plot == FALSE) {
@@ -75,44 +72,39 @@
     if(method == "Log10") { radCom <- dplyr::select(radCom, Species,Ranks, ys=log10pi, Community)}
     if(method == "Rel.Abun") { radCom <- dplyr::select(radCom, Species,Ranks, ys=Re.Ab, Community)}
     
-      
+    
     if(name == FALSE){
       if(mixing == FALSE){
-        pr <- ggplot2::ggplot(radCom, ggplot2::aes(x = Ranks, y = ys, color = Community)) + geom_point() + facet_wrap(~Community, ncol=2) +
-                       geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
-                       theme(legend.position = "none", axis.text=element_text(size=7), axis.title=element_text(size=7))+
-                       scale_fill_brewer(palette="Set1")
+        pr <- ggplot2::ggplot(radCom,aes(x = Ranks, y = ys, color = Community)) + geom_point() + facet_wrap(~Community, ncol=2) +
+          geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
+          theme(legend.position = "none", axis.text=element_text(size=7), axis.title=element_text(size=7))+
+          scale_fill_brewer(palette="Set1")
       } else{ 
-                       
-                    pr <- ggplot2::ggplot(radCom, ggplot2::aes(x = Ranks, y = ys, fill = Community, color = Community)) + geom_point() +
-                         geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
-                         theme(legend.position = "right", axis.text=element_text(size=7),
-                               axis.title=element_text(size=7)) +
-                      scale_color_brewer(palette="Set1")
-                       
-                       }
+        
+        pr <- ggplot2::ggplot(radCom, aes(x = Ranks, y = ys, fill = Community, color = Community)) + geom_point() +
+          geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
+          theme(legend.position = "right", axis.text=element_text(size=7),
+                axis.title=element_text(size=7)) +
+          scale_color_brewer(palette="Set1")
+        
+      }
     } else{
       
       if(mixing == FALSE){ 
-        pr <- ggplot2::ggplot(radCom, ggplot2::aes(x = Ranks, y = ys)) + geom_point() + facet_wrap(vars(Community), ncol=2) +
+        pr <- ggplot2::ggplot(radCom, aes(x = Ranks, y = ys)) + geom_point() + facet_wrap(vars(Community), ncol=2) +
           geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
           theme(legend.position = "none", axis.text=element_text(size=7),
                 axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
           geom_text(aes(label=Species),hjust=-0.5, vjust=-0.5) 
       }else{ 
-        pr <- ggplot2::ggplot(radCom, ggplot2::aes(x = Ranks, y = ys, fill = Community, color=Community)) + geom_point() + 
+        pr <- ggplot2::ggplot(radCom, aes(x = Ranks, y = ys, fill = Community, color=Community)) + geom_point() + 
           geom_line()  + theme_bw() + xlab('Rank Abundance') + ylab(paste0(method)) + 
           theme(legend.position = "right", axis.text=element_text(size=7),
                 axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-            geom_text(aes(label=Species),hjust=-0.5, vjust=-0.5) +
+          geom_text(aes(label=Species),hjust=-0.5, vjust=-0.5) +
           scale_color_brewer(palette="Set1")
-          }
+      }
     }
   }
   print(pr)
 }
-
-
-  
- rd <- rad.fit(x, name = T, plot=T, method = 'Rel.Abun', mixing = T)
-

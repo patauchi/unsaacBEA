@@ -5,8 +5,10 @@ Version: 1.0
 Date: 2018-12-18
 Author: P. Joser Atauchi
 Maintainer: P. Joser Atauchi <patauchi@gmail.com>
-Description: Tools to biodiversity and ecological analysis
+Description: Tools to biodiversity and ecological analysis, ahora asd asdas da dasdiasjdiasjda
+ asd asdsad a de la misma forma puede desarrollar multiples modelska 
 License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.0)
+Imports: Rcpp (>= 1.0.0), dplyr, ggplot2
 LinkingTo: Rcpp
+Depends: R (>= 2.14), stats
 RoxygenNote: 6.1.1
