@@ -2,32 +2,48 @@ if (getRversion() >= "2.15.1") { utils::globalVariables(c("Commun","Re.Ab","Spec
                                                           "log10pi","ys","geom_point","facet_wrap","geom_line","theme_bw",
                                                           "xlab","ylab","theme","theme_bw","element_text","scale_fill_brewer",
                                                           "scale_color_brewer","vars","geom_text","aes"))}
-#' Rango Abundance Distribution Fit
+#' Rank Abundance Distribution Fit (RAD)
 #'
-#' \code{Rango Abundance Curve} returns the abundance models.
+#' @description  RAD is used to show structure community of species using different approaches to fited our date like Abundance, Relative Abundance and Log2.
+#' 
+#' These methods are the most used on ecology.
+#' 
+#' @details The function \code{rad.fit} uses three different methods for fitting a curve. \code{Abundance} is a bit used.
 #'
-#' This is a generic function: methods can be defined for it directly
-#' or via the \code{\link{Summary}} group generic. For this to work properly,
-#' the arguments \code{...} should be unnamed, and dispatch is on the
-#' first argument.
-#'
-#' @param Vdata Two Community with Abundance of species.
-#' @param name asd asd asd asd as
-#' @param plot a das das das 
-#' @param method  a dasd as das dasdsa
-#' @param mixing  asdad as da
+#' @param Vdata data.frame. Abundance dataset e.g. the first column is species name then communities
+#' @param name logial. used just plot is \code{TRUE}. \code{Default = FALSE}
+#' @param plot logical. used to plot RAD. \code{Default = FALSE}
+#' @param method different methods to RAD plot. e.g. 'Abundance',  'Log2',  'Log10',  'Rel.Abun'.
+#' @param mixing  Combining all abundance dataset in a plot
 #' @param ... optional
 #' 
-#' @return If all inputs are integer and logical, then the output
-#'   will be an integer. If integer overflow
-#'   \url{http://en.wikipedia.org/wiki/Integer_overflow} occurs, the output
-#'   will be NA with a warning. Otherwise it will be a length-one numeric or
-#'   complex vector.
-#'
-#'   Zero-length vectors have sum 0 by definition. See
-#'   \url{http://en.wikipedia.org/wiki/Empty_sum} for more details.
+#' @return If \code{plot = FALSE}. The function creates a list of all communities. Another way, 
+#' plot RAD.
 #' @export
 #' @import ggplot2
+#' 
+#' @example 
+#' 
+#' sps <- c('sp1','sp2','sp3','sp4','sp5','sp6','sp7','sp8','sp9','sp10','sp11','sp12','sp13',
+#'         'sp14','sp15')
+#' comm1 <- c(5,4,3,5,6,1,4,5,65,87,12,45,67,89,23)
+#' comm2 <- c(1,2,6,0,0,5,7,2,7,9,3,2,1,6,5)
+#' comm3 <- c(335,123,57,3,4,0,0,0,0,12,34,54,11,3,0)
+
+#' ec_data <- data.frame(sps,comm1, comm2, comm3)
+
+#' # Plot 
+#' outcomes <- rad.fit(ec_data)
+#' str(outcomes)
+
+#' # Plot
+#' outcomes <- rad.fit(ec_data, plot = T)
+
+#' # Plot with names
+#' outcomes <- rad.fit(ec_data, name=T, plot = T)
+
+#' # Plot mixing
+#' outcomes <- rad.fit(ec_data, plot = T, mixing = T)
 
 rad.fit <- function(Vdata, name=FALSE, plot = F, method='Log10', mixing = FALSE, ...){
   

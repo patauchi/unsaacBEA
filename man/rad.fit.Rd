@@ -2,40 +2,33 @@
 % Please edit documentation in R/rad.fit.R
 \name{rad.fit}
 \alias{rad.fit}
-\title{Rango Abundance Distribution Fit}
+\title{Rank Abundance Distribution Fit (RAD)}
 \usage{
 rad.fit(Vdata, name = FALSE, plot = F, method = "Log10",
   mixing = FALSE, ...)
 }
 \arguments{
-\item{Vdata}{Two Community with Abundance of species.}
+\item{Vdata}{data.frame. Abundance dataset e.g. the first column is species name then communities}
 
-\item{name}{asd asd asd asd as}
+\item{name}{logial. used just plot is \code{TRUE}. \code{Default = FALSE}}
 
-\item{plot}{a das das das}
+\item{plot}{logical. used to plot RAD. \code{Default = FALSE}}
 
-\item{method}{a dasd as das dasdsa}
+\item{method}{different methods to RAD plot. e.g. 'Abundance',  'Log2',  'Log10',  'Rel.Abun'.}
 
-\item{mixing}{asdad as da}
+\item{mixing}{Combining all abundance dataset in a plot}
 
 \item{...}{optional}
 }
 \value{
-If all inputs are integer and logical, then the output
-  will be an integer. If integer overflow
-  \url{http://en.wikipedia.org/wiki/Integer_overflow} occurs, the output
-  will be NA with a warning. Otherwise it will be a length-one numeric or
-  complex vector.
-
-  Zero-length vectors have sum 0 by definition. See
-  \url{http://en.wikipedia.org/wiki/Empty_sum} for more details.
+If \code{plot = FALSE}. The function creates a list of all communities. Another way, 
+plot RAD.
 }
 \description{
-\code{Rango Abundance Curve} returns the abundance models.
+RAD is used to show structure community of species using different approaches to fited our date like Abundance, Relative Abundance and Log2.
+
+These methods are the most used on ecology.
 }
 \details{
-This is a generic function: methods can be defined for it directly
-or via the \code{\link{Summary}} group generic. For this to work properly,
-the arguments \code{...} should be unnamed, and dispatch is on the
-first argument.
+The function \code{rad.fit} uses three different methods for fitting a curve. \code{Abundance} is a bit used.
 }

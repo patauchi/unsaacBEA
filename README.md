@@ -4,10 +4,19 @@ The goal of unsaacBEA is to ...
 
 ## Installation
 
-You can install the released version of unsaacBEA from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of unsaacBEA from [GitHub](https://github.com) with:
 
 ``` r
-install.packages("unsaacBEA")
+# Installing and loading packages
+if(!require(devtools)){
+    install.packages("devtools")
+}
+
+if(!require(unsaacBEA)){
+    devtools::install_github("patauchi/unsaacBEA")
+}
+
+library(unsaacBEA)
 ```
 
 ## Example
