@@ -17,6 +17,9 @@ if(!require(unsaacBEA)){
 }
 
 library(unsaacBEA)
+
+# Examples
+?rad.fit
 ```
 
 ## Example
