@@ -32,3 +32,24 @@ These methods are the most used on ecology.
 \details{
 The function \code{rad.fit} uses three different methods for fitting a curve. \code{Abundance} is a bit used.
 }
+\examples{
+sps <- c('sp1','sp2','sp3','sp4','sp5','sp6','sp7','sp8','sp9','sp10','sp11','sp12','sp13',
+        'sp14','sp15')
+comm1 <- c(5,4,3,5,6,1,4,5,65,87,12,45,67,89,23)
+comm2 <- c(1,2,6,0,0,5,7,2,7,9,3,2,1,6,5)
+comm3 <- c(335,123,57,3,4,0,0,0,0,12,34,54,11,3,0)
+ec_data <- data.frame(sps,comm1, comm2, comm3)
+
+# Plot 
+outcomes <- rad.fit(ec_data)
+str(outcomes)
+
+# Plot
+outcomes <- rad.fit(ec_data, plot = T)
+
+# Plot with names
+outcomes <- rad.fit(ec_data, name=T, plot = T)
+
+# Plot mixing
+outcomes <- rad.fit(ec_data, plot = T, mixing = T)
+}
